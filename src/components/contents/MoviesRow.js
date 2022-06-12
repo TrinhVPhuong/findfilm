@@ -1,89 +1,107 @@
 import styled from "styled-components";
-import Slider from "react-slick";
-
+import { Navigation } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 import MovieCard from "./MovieCard";
-import { FcPrevious, FcNext } from "react-icons/fc";
+import { useState, useEffect } from "react";
+import tmdbApi, { moviesGenres, tvGenres } from "../../api/tmdbApi";
 
-const movies = [
-  "https://innovavietnam.vn/wp-content/uploads/poster-561x800.jpg",
-  "https://innovavietnam.vn/wp-content/uploads/poster-561x800.jpg",
-  "http://d1j8r0kxyu9tj8.cloudfront.net/files/1618301042CTBAF7i4v3cXFfn.jpg",
-  "https://innovavietnam.vn/wp-content/uploads/poster-561x800.jpg",
-  "https://innovavietnam.vn/wp-content/uploads/poster-561x800.jpg",
-  "http://d1j8r0kxyu9tj8.cloudfront.net/files/1618301042CTBAF7i4v3cXFfn.jpg",
-  "https://innovavietnam.vn/wp-content/uploads/poster-561x800.jpg",
-  "https://innovavietnam.vn/wp-content/uploads/poster-561x800.jpg",
-  "http://d1j8r0kxyu9tj8.cloudfront.net/files/1618301042CTBAF7i4v3cXFfn.jpg",
-];
+const MoviesRow = (props) => {
+  const { type, genre, similar,id ,category } = { ...props };
+  const [MovieList, setMovieList] = useState([]);
+  const [isRender, setisRender] = useState(false);
+  useEffect(() => {
+    const getMovieList = async () => {
+      switch (true) {
+        case !(genre === undefined): {
+          const params = {
+            page: 1,
+            with_genres: moviesGenres[genre] ?? tvGenres[genre],
+          };
+          try {
+            const response = await tmdbApi.getMoviesByGenre(category, {
+              params,
+            });
+            setMovieList(tmdbApi.sortPopularity(response.results));
+            setisRender(true);
+          } catch (error) {
+            console.log(error);
+          }
 
-function SampleNextArrow(props) {
+          break;
+        }
+        case !(type === undefined): {
+          const params = { page: 1 };
+          try {
+            const response = await tmdbApi.getMoviesByType(type, category, {
+              params
+            });
+            setMovieList(tmdbApi.sortPopularity(response.results));
+            setisRender(true);
+          } catch (error) {
+            console.log(error);
+          }
+
+          break;
+        }
+        case !(similar === undefined): {
+          try {
+            const params = {};
+            const response = await tmdbApi.getSimilar(category, id, {
+              params
+            });
+            setMovieList(tmdbApi.sortPopularity(response.results));
+            setisRender(true);
+          } catch (error) {
+            setisRender(false);
+          }
+
+          break;
+        }
+        default:
+          console.log("error");
+      }
+    };
+    getMovieList();
+  }, [type, genre, similar,id ,category]);
   return (
-    <div {...props}><FcPrevious /></div>
-  );
-}
-
-function SamplePrevArrow(props) {
-  return (
-    <div {...props}><FcPrevious /></div>
-  );
-}
-
-function MoviesRow(props) {
-  const SlideSettings = {
-    dots: false,
-    infinite: true,
-    speed: 600,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    prevArrow: <FcPrevious />,
-    nextArrow: <SamplePrevArrow />,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
-
-  return (
+    isRender && 
     <MovieListRow>
-      <h1 className="heading">Content</h1>
+      <h1 className="heading">{type ?? genre ?? similar}</h1>
       <MovieSlider>
-        <Slider {...SlideSettings}>
-          {movies.map((movie, index) => (
-            <MovieCard key={index} movie={movie} />
+        <Swiper
+          modules={[Navigation]}
+          navigation
+          spaceBetween={20}
+          breakpoints={{
+            425: {
+              slidesPerView: 1,
+              spaceBetween: 10,
+            },
+            640: {
+              slidesPerView: 2,
+              spaceBetween: 10,
+            },
+            1024: {
+              slidesPerView: 5,
+              spaceBetween: 10,
+            },
+          }}
+        >
+          {MovieList.map((movie, index) => (
+            <SwiperSlide key={index}>
+              <MovieCard movie={movie} category={category} />
+            </SwiperSlide>
           ))}
-        </Slider>
+        </Swiper>
       </MovieSlider>
     </MovieListRow>
   );
-}
+};
 export default MoviesRow;
 
 const MovieListRow = styled.div`
   background-color: var(--color-background);
   color: var(--color-white);
-  padding: 20px 0;
   position: relative;
 
   .heading {
@@ -93,35 +111,19 @@ const MovieListRow = styled.div`
 `;
 const MovieSlider = styled.div`
   overflow: hidden;
-  .slick-slide > div {
-    margin: 0 10px;
-  }
-  .slick-list {
-    margin: 0 -10px;
-  }
-  .slick-track {
-    margin: 30px 0px;
-    text-align: center;
-  }
-  .slick-arrow {
-    z-index: 20;
-    height: 100px;
-    width: 40px;
-    transition: background-color 0.5s ease;
-    polygon {
-      fill: #fff;
-    }
-    &:hover {
-      background-color: #000000c2;
-    }
-  }
-  .slick-prev {
-    left: 0;
-  }
-  .slick-next {
-    right: 0;
-  }
   &:hover .MovieItem {
     opacity: 0.5;
+  }
+  .swiper-wrapper {
+    margin: 30px 0px;
+    text-align: center;
+    /* padding: 0px 20px; */
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    height: 50px;
+    width: 50px;
+    color: #fff;
   }
 `;

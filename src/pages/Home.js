@@ -1,12 +1,8 @@
-import { Navbar, HeaderSlide } from "./components/header";
-
+import HeaderSlide from "../components/header/HeaderSlide.js";
+import useTitle from '../hooks/useTitle.js'
 const Home = (props) => {
-  return (
-    <>
-      <Navbar />
-      <HeaderSlide />
-    </>
-  );
+  useTitle('Home')
+  return <HeaderSlide />;
 };
 
 export default Home;
