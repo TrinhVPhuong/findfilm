@@ -50,7 +50,6 @@ const Search = () => {
     };
     getMovieList();
   }, [queryStr, pageStr]);
-  console.log(Navmap);
   const [windowWidth, setwindowWidth] = useState(window.innerWidth);
   useEffect(() => {
     const handleResize = () => {
@@ -128,7 +127,7 @@ const Search = () => {
                       </Link>
                     )
                 )}
-                {Page.current !== Page.total && (
+                {(Page.current !== Page.total && Page.total !== 0) && (
                   <Link to={`/search?keywords=${queryStr}&page=${Page.total}`}>
                     {">>"}
                   </Link>
@@ -169,7 +168,7 @@ const MovieGrid = styled.div`
 const NotFound = styled.div`
   text-align: center;
   color: var(--color-white);
-  font-size: 30px;
+  height: calc(43vh - 1px);
 `;
 const Navigation = styled.div`
   margin-top:20px;
