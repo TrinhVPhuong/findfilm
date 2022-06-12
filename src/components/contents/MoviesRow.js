@@ -71,7 +71,6 @@ const MoviesRow = (props) => {
         <Swiper
           modules={[Navigation]}
           navigation
-          spaceBetween={20}
           breakpoints={{
             425: {
               slidesPerView: 1,

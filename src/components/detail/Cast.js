@@ -48,7 +48,16 @@ const Cast = (props) => {
               return 2;
           }
         }}
-        items = {Casts.length}
+        setwidth={() => {
+          switch (true) {
+            case windowWidth > 1024:
+              return `${100/6}%`;
+            case windowWidth > 768:
+              return `${100/3}%`;
+            default:
+              return `${100/2}%`;
+          }
+        }}
       >
         {Casts &&
           Casts.map((cast, index) => (
@@ -83,14 +92,14 @@ const CastContainer = styled.div`
 `;
 const Castgrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(${(props) => props.columms}, ${props => props.items < props.columms  ? `${100/props.columms}%` : 'auto'});
-  gap: 10px;
+  grid-template-columns: repeat(${(props) => props.columms}, ${(props) => props.setwidth});
   flex-basis: 100%;
   max-width: 1280px;
   margin: 0 auto;
   color: var(--color-white);
 `;
 const CastItem = styled.div`
+padding: 0px 5px;
   .cast-bounder {
     display: block;
     height: 100%;

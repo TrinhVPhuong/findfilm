@@ -24,6 +24,7 @@ export default MovieCard;
 
 const MovieItem = styled.div`
   height: 100%;
+  padding: 10px;
   .MovieItem {
     height: inherit;
     border-radius: 20px;

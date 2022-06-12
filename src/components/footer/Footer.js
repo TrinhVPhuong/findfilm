@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import NetflixLogo from "../../assets/images/NetflixLogo.png";
+import FooterBg from "../../assets/images/footer-bg.jpg";
 import { AiFillGithub, AiFillMail, AiFillPhone } from "react-icons/ai";
 const Footer = () => {
   return (
-    <FooterContainer>
+    <FooterContainer bg = {FooterBg}>
       <div className="footer-content">
         <img src={NetflixLogo} alt="" />
         <p>Trịnh Văn Phương</p>
@@ -39,6 +40,10 @@ const Footer = () => {
 export default Footer;
 
 const FooterContainer = styled.div`
+  background-image: url(${props => props.bg});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
     /* background-color: #fff; */
     @media only screen and (max-width: 768px) {
         padding-bottom: 60px;

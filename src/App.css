@@ -37,3 +37,8 @@ html::-webkit-scrollbar-thumb {
 html::-webkit-scrollbar-thumb:hover {
   background-color: #fff;
 }
+@media only screen and (max-width: 768px) {
+  .content-container {
+    padding-top: 130px;
+  }
+}
