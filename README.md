@@ -1,1 +1,0 @@
-Responsive Movie App using ReactJS
