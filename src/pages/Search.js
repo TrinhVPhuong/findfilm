@@ -172,7 +172,8 @@ const NotFound = styled.div`
   font-size: 30px;
 `;
 const Navigation = styled.div`
-margin-top:20px;
+  margin-top:20px;
+  margin-bottom:20px;
   text-align: center;
   .navigation {
     display: flex;
