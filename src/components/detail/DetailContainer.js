@@ -43,7 +43,7 @@ const DetailContainer = (props) => {
     !isRender && (
       <>
         <DetailImg
-          bgPath={`${tmdbApi.w500Image(
+          bgPath={`${tmdbApi.originalImage(
             MovieorPeople[handleKey("backdrop_path", "profile_path")]
           )}`}
         >
