@@ -11,11 +11,9 @@ const Cast = (props) => {
   useEffect(() => {
     const getCasts = async () => {
       try {
-        const params = {};
-        const responseCredit = await tmdbApi.getCredit(category, id, {
-          params,
-        });
-        const temp = [...new Map(responseCredit.cast.map(item => [item['name'], item])).values()] // lọc trùng theo name
+        const responseCredit = await tmdbApi.getCredit(category, id);
+        const temp = [...new Map(responseCredit.cast.map(item => [item['name'] || item['title'], item])).values()] // lọc trùng theo name
+        console.log(responseCredit.cast)
         setCasts(tmdbApi.sortPopularity(temp).slice(0,6));
         setisRender(true)
       } catch (error) {
@@ -97,6 +95,7 @@ const Castgrid = styled.div`
   max-width: 1280px;
   margin: 0 auto;
   color: var(--color-white);
+  row-gap: 10px;
 `;
 const CastItem = styled.div`
 padding: 0px 5px;

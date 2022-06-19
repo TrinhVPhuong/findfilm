@@ -18,9 +18,7 @@ const MoviesRow = (props) => {
             with_genres: moviesGenres[genre] ?? tvGenres[genre],
           };
           try {
-            const response = await tmdbApi.getMoviesByGenre(category, {
-              params,
-            });
+            const response = await tmdbApi.getMoviesByGenre(category, params);
             setMovieList(tmdbApi.sortPopularity(response.results));
             setisRender(true);
           } catch (error) {
@@ -32,9 +30,7 @@ const MoviesRow = (props) => {
         case !(type === undefined): {
           const params = { page: 1 };
           try {
-            const response = await tmdbApi.getMoviesByType(type, category, {
-              params
-            });
+            const response = await tmdbApi.getMoviesByType(type, category, params);
             setMovieList(tmdbApi.sortPopularity(response.results));
             setisRender(true);
           } catch (error) {
@@ -46,9 +42,7 @@ const MoviesRow = (props) => {
         case !(similar === undefined): {
           try {
             const params = {};
-            const response = await tmdbApi.getSimilar(category, id, {
-              params
-            });
+            const response = await tmdbApi.getSimilar(category, id, params);
             setMovieList(tmdbApi.sortPopularity(response.results));
             setisRender(true);
           } catch (error) {

@@ -18,7 +18,7 @@ const Search = () => {
     const getMovieList = async () => {
       const params = { query: queryStr, page: pageStr };
       try {
-        const response = await tmdbApi.search(category, { params });
+        const response = await tmdbApi.search(category, params);
         setShowNotfound(response.results.length === 0);
         setMovieList(tmdbApi.sortPopularity(response.results));
         setPage({ current: response.page, total: response.total_pages });

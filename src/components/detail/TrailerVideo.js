@@ -8,8 +8,7 @@ const TrailerVideo = (props) => {
   useEffect(() => {
     const getTrailer = async () => {
       try {
-        const params = {};
-        const response = await tmdbApi.getVideos(category, id, { params });
+        const response = await tmdbApi.getVideos(category, id);
         const responseTrailer =
           response.results.length > 0 &&
           response.results[

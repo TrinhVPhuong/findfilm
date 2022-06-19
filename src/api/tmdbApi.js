@@ -63,35 +63,35 @@ export const tvGenres = {
 // Hàm get data
 const tmdbApi = {
   // Lấy phim từ type
-  getMoviesByType: (type,category, params) => {
+  getMoviesByType: (type,category, params ={}) => {
     const url = `${category}/${moviesTypes[type] ?? tvTypes[type]}`;
-    return axiosClient.get(url, params);
+    return axiosClient.get(url, {params});
   },
   //Lấy phim từ genre
-  getMoviesByGenre: (category, params) => {
+  getMoviesByGenre: (category, params ={}) => {
     const url = `/discover/${category}`;
-    return axiosClient.get(url, params);
+    return axiosClient.get(url, {params});
   },
   // Tìm kiếm
-  search: (category, params) =>{
+  search: (category, params ={}) =>{
     const url = `/search/${category}`;
-    return axiosClient.get(url, params);
+    return axiosClient.get(url, {params});
   },
-  getDetail: (category,id,params) =>{
+  getDetail: (category,id,params = {}) =>{
     const url = `/${category}/${id}`;
-    return axiosClient.get(url, params);
+    return axiosClient.get(url, {params});
   },
-  getCredit: (category,id,params) =>{
+  getCredit: (category,id,params = {}) =>{
     const url = `/${category}/${id}/credits`;
-    return axiosClient.get(url, params);
+    return axiosClient.get(url, {params});
   },
-  getVideos: (category,id,params) =>{
+  getVideos: (category,id,params ={}) =>{
     const url = `/${category}/${id}/videos`;
-    return axiosClient.get(url, params);
+    return axiosClient.get(url, {params});
   },
-  getSimilar: (category,id,params) =>{
+  getSimilar: (category,id,params ={}) =>{
     const url = `/${category}/${id}/similar`;
-    return axiosClient.get(url, params);
+    return axiosClient.get(url, {params});
   },
   // hàm lấy đường dẫn ảnh
   originalImage: (imgPath) => !(imgPath  === undefined || imgPath === null) ? `https://image.tmdb.org/t/p/original${imgPath}` : PlaceHoderImage,

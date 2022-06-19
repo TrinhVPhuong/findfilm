@@ -12,9 +12,7 @@ const HeaderSlide = (props) => {
     const getmovieList = async () => {
       const params = { page: 1 };
       try {
-        const response = await tmdbApi.getMoviesByType('Now Playing',category, {
-          params,
-        });
+        const response = await tmdbApi.getMoviesByType('Now Playing',category, params);
         setmovieList(response.results);
         
       } catch (error) {

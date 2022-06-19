@@ -14,10 +14,7 @@ const DetailContainer = (props) => {
   useEffect(() => {
     const getMovieorPeople = async () => {
       try {
-        const params = {};
-        const responseMovieorPeople = await tmdbApi.getDetail(category, id, {
-          params,
-        });
+        const responseMovieorPeople = await tmdbApi.getDetail(category, id);
         setMovieorPeople(responseMovieorPeople);
         setisRender(
           Object.keys(responseMovieorPeople).length === 0 &&
